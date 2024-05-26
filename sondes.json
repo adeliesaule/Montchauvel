@@ -1,0 +1,347 @@
+[
+    {
+        "id": "777e4c926ea51098",
+        "type": "tab",
+        "label": "Flux 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "55df8045d852329c",
+        "type": "function",
+        "z": "777e4c926ea51098",
+        "name": "Convert to Float",
+        "func": "let result = [];\nfor (let i = 0; i < msg.payload.length; i += 2) {\n    let high = msg.payload[i];\n    let low = msg.payload[i+1];\n    let buf = Buffer.alloc(4);\n    buf.writeUInt16BE(high, 0);\n    buf.writeUInt16BE(low, 2);\n    let value = buf.readFloatBE(0);\n    result.push(value);\n}\nmsg.payload = result;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 890,
+        "y": 780,
+        "wires": [
+            [
+                "22704687efaee8d8"
+            ]
+        ]
+    },
+    {
+        "id": "22704687efaee8d8",
+        "type": "function",
+        "z": "777e4c926ea51098",
+        "name": "Format CSV",
+        "func": "let date = new Date();\nlet localISOTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();\nmsg.timestamp = localISOTime;\n\nlet csv = `${localISOTime},${msg.payload.join(',')}\\n`;\nmsg.payload = csv;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 780,
+        "wires": [
+            [
+                "da390121e7648b35"
+            ]
+        ]
+    },
+    {
+        "id": "da390121e7648b35",
+        "type": "file",
+        "z": "777e4c926ea51098",
+        "name": "Ballons ",
+        "filename": "/Users/grillot/Documents/Projet Montchauvel/temp/a.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1480,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b9dfa8e410fa8ee9",
+        "type": "function",
+        "z": "777e4c926ea51098",
+        "name": "Convert to Float",
+        "func": "let result = [];\nfor (let i = 0; i < msg.payload.length; i += 2) {\n    let high = msg.payload[i];\n    let low = msg.payload[i+1];\n    let buf = Buffer.alloc(4);\n    buf.writeUInt16BE(high, 0);\n    buf.writeUInt16BE(low, 2);\n    let value = buf.readFloatBE(0);\n    result.push(value);\n}\nmsg.payload = result;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 890,
+        "y": 880,
+        "wires": [
+            [
+                "33633c6e563e3188"
+            ]
+        ]
+    },
+    {
+        "id": "33633c6e563e3188",
+        "type": "function",
+        "z": "777e4c926ea51098",
+        "name": "Convert to Local Time ISO",
+        "func": "let date = new Date();\nlet localISOTime = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().slice(0, -1);\nmsg.payload.timestamp = localISOTime;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 880,
+        "wires": [
+            [
+                "1b60839d0a76b916"
+            ]
+        ]
+    },
+    {
+        "id": "1b60839d0a76b916",
+        "type": "function",
+        "z": "777e4c926ea51098",
+        "name": "Format CSV",
+        "func": "let csv = \"timestamp,value\\n\";\nmsg.payload.forEach((value, index) => {\n    csv += `${msg.payload.timestamp},${value}\\n`;\n});\nmsg.payload = csv;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1330,
+        "y": 880,
+        "wires": [
+            [
+                "ceda27a370421eb5"
+            ]
+        ]
+    },
+    {
+        "id": "ceda27a370421eb5",
+        "type": "file",
+        "z": "777e4c926ea51098",
+        "name": "Maison",
+        "filename": "/Users/grillot/Documents/Projet Montchauvel/temp/b.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1480,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9a293bd5890b5832",
+        "type": "inject",
+        "z": "777e4c926ea51098",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 430,
+        "y": 780,
+        "wires": [
+            [
+                "c4121fc5f11597f9",
+                "0a51dbca29b41763"
+            ]
+        ]
+    },
+    {
+        "id": "c4121fc5f11597f9",
+        "type": "modbus-getter",
+        "z": "777e4c926ea51098",
+        "name": "Sondes ballons ",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "",
+        "dataType": "InputRegister",
+        "adr": "40000",
+        "quantity": "16",
+        "server": "3162e35ea5f1dd3c",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 700,
+        "y": 780,
+        "wires": [
+            [
+                "55df8045d852329c"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "d0f785f3fdf8a700",
+        "type": "modbus-getter",
+        "z": "777e4c926ea51098",
+        "name": "Sondes maison ",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "",
+        "dataType": "InputRegister",
+        "adr": "40000",
+        "quantity": "16",
+        "server": "da6445134b316004",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 700,
+        "y": 880,
+        "wires": [
+            [
+                "b9dfa8e410fa8ee9"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "0a51dbca29b41763",
+        "type": "delay",
+        "z": "777e4c926ea51098",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 520,
+        "y": 880,
+        "wires": [
+            [
+                "d0f785f3fdf8a700"
+            ]
+        ]
+    },
+    {
+        "id": "convert-to-local-time",
+        "type": "function",
+        "z": "777e4c926ea51098",
+        "name": "Convert to Local Time",
+        "func": "let date = new Date();\nmsg.payload.timestamp = date.toLocaleString();\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 660,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "function-format-csv-ballons",
+        "type": "function",
+        "z": "777e4c926ea51098",
+        "name": "Format CSV (Ballons)",
+        "func": "let date = new Date().toISOString();\nlet csv = `${date},${msg.payload.join(',')}\\n`;\nmsg.payload = csv;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1420,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3162e35ea5f1dd3c",
+        "type": "modbus-client",
+        "name": "MR-AI8 ID 11",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.0.111",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "11",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "da6445134b316004",
+        "type": "modbus-client",
+        "name": "MR-AI8 ID 12",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "192.168.0.111",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "12",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    }
+]
