@@ -1,0 +1,628 @@
+[
+    {
+        "id": "6bb10caef6b8d518",
+        "type": "tab",
+        "label": "Draft Récupération données",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "a6ad83f9414630e0",
+        "type": "inject",
+        "z": "6bb10caef6b8d518",
+        "name": "Initial launching",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "dae5c14e8b299324"
+            ]
+        ]
+    },
+    {
+        "id": "c1154f6f6145feb0",
+        "type": "modbus-flex-getter",
+        "z": "6bb10caef6b8d518",
+        "name": "Modbus Flex Getter",
+        "showStatusActivities": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "server": "01e16d31ad644518",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": true,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 1170,
+        "y": 740,
+        "wires": [
+            [
+                "165dfbfee87aa126",
+                "c82d89c0ab189bf7",
+                "020fcddf1022d3bc",
+                "7c6d56afaf97cf88",
+                "3520a2ba16debc33"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "dae5c14e8b299324",
+        "type": "function",
+        "z": "6bb10caef6b8d518",
+        "name": "Ballon1Haut",
+        "func": "msg.payload = { 'fc': 3, 'unitid': 1, 'address': 0, 'quantity': 1 }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 360,
+        "wires": [
+            [
+                "f62f82038218835d"
+            ]
+        ]
+    },
+    {
+        "id": "ef40fdd377954127",
+        "type": "catch",
+        "z": "6bb10caef6b8d518",
+        "name": "",
+        "scope": null,
+        "x": 660,
+        "y": 220,
+        "wires": [
+            [
+                "bd8d40a337e38fb0"
+            ]
+        ]
+    },
+    {
+        "id": "bd8d40a337e38fb0",
+        "type": "debug",
+        "z": "6bb10caef6b8d518",
+        "name": "Errors",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 810,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "165dfbfee87aa126",
+        "type": "function",
+        "z": "6bb10caef6b8d518",
+        "name": "array to number",
+        "func": "msg.payload = msg.payload[0]\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1380,
+        "y": 740,
+        "wires": [
+            [
+                "690e1d1c17ce0e85",
+                "20cec05f67e0aff1"
+            ]
+        ]
+    },
+    {
+        "id": "3520a2ba16debc33",
+        "type": "switch",
+        "z": "6bb10caef6b8d518",
+        "name": "check previous topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Ballon2Bas",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 700,
+        "y": 360,
+        "wires": [
+            [
+                "59c9b81ada346e21"
+            ]
+        ]
+    },
+    {
+        "id": "59c9b81ada346e21",
+        "type": "delay",
+        "z": "6bb10caef6b8d518",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 900,
+        "y": 360,
+        "wires": [
+            [
+                "dae5c14e8b299324"
+            ]
+        ]
+    },
+    {
+        "id": "85589148074e7b96",
+        "type": "file",
+        "z": "6bb10caef6b8d518",
+        "name": "Fichier csv",
+        "filename": "C:\\Users\\jerom\\OneDrive\\Documents\\Adelie\\Projet Montchauvel\\testBallonsLyon.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 2070,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "acd983b100533527",
+        "type": "csv",
+        "z": "6bb10caef6b8d518",
+        "name": "DonneesBallon",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\r\\n",
+        "temp": "date,Ballon1Haut,Ballon1Bas,Ballon2Haut,Ballon2Bas",
+        "skip": "0",
+        "strings": false,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 1880,
+        "y": 760,
+        "wires": [
+            [
+                "85589148074e7b96",
+                "13c3eb53292d07e9"
+            ]
+        ]
+    },
+    {
+        "id": "20cec05f67e0aff1",
+        "type": "join",
+        "z": "6bb10caef6b8d518",
+        "name": "join date and data",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "5",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "num",
+        "reduceFixup": "",
+        "x": 1680,
+        "y": 760,
+        "wires": [
+            [
+                "acd983b100533527"
+            ]
+        ]
+    },
+    {
+        "id": "37da23b2c39f95e3",
+        "type": "function",
+        "z": "6bb10caef6b8d518",
+        "name": "Ballon1Bas",
+        "func": "msg.payload = { 'fc': 3, 'unitid': 1, 'address': 1, 'quantity': 1 }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 420,
+        "wires": [
+            [
+                "31ba95854f251b15"
+            ]
+        ]
+    },
+    {
+        "id": "96125bc13307a2e6",
+        "type": "function",
+        "z": "6bb10caef6b8d518",
+        "name": "Ballon2Haut",
+        "func": "msg.payload = { 'fc': 3, 'unitid': 1, 'address': 2, 'quantity': 1 }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 480,
+        "wires": [
+            [
+                "442cdc1192f3a9eb"
+            ]
+        ]
+    },
+    {
+        "id": "31ba95854f251b15",
+        "type": "change",
+        "z": "6bb10caef6b8d518",
+        "name": "set topic and timestamp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Ballon1Bas",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "date",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 420,
+        "wires": [
+            [
+                "c1154f6f6145feb0"
+            ]
+        ]
+    },
+    {
+        "id": "442cdc1192f3a9eb",
+        "type": "change",
+        "z": "6bb10caef6b8d518",
+        "name": "set topic and timestamp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Ballon2Haut",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "date",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 480,
+        "wires": [
+            [
+                "c1154f6f6145feb0"
+            ]
+        ]
+    },
+    {
+        "id": "690e1d1c17ce0e85",
+        "type": "debug",
+        "z": "6bb10caef6b8d518",
+        "name": "surveillance delta mesures",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "date",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1520,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "a125f8d77aa6f021",
+        "type": "function",
+        "z": "6bb10caef6b8d518",
+        "name": "Ballon2Haut",
+        "func": "msg.payload = { 'fc': 3, 'unitid': 1, 'address': 3, 'quantity': 1 }\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 540,
+        "wires": [
+            [
+                "4454d33721bbc875"
+            ]
+        ]
+    },
+    {
+        "id": "4454d33721bbc875",
+        "type": "change",
+        "z": "6bb10caef6b8d518",
+        "name": "set topic and timestamp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Ballon2Bas",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "date",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 540,
+        "wires": [
+            [
+                "c1154f6f6145feb0"
+            ]
+        ]
+    },
+    {
+        "id": "7c6d56afaf97cf88",
+        "type": "switch",
+        "z": "6bb10caef6b8d518",
+        "name": "check previous topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Ballon1Haut",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 700,
+        "y": 420,
+        "wires": [
+            [
+                "37da23b2c39f95e3"
+            ]
+        ]
+    },
+    {
+        "id": "020fcddf1022d3bc",
+        "type": "switch",
+        "z": "6bb10caef6b8d518",
+        "name": "check previous topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Ballon1Bas",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 700,
+        "y": 480,
+        "wires": [
+            [
+                "96125bc13307a2e6"
+            ]
+        ]
+    },
+    {
+        "id": "c82d89c0ab189bf7",
+        "type": "switch",
+        "z": "6bb10caef6b8d518",
+        "name": "check previous topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Ballon2Haut",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 700,
+        "y": 540,
+        "wires": [
+            [
+                "a125f8d77aa6f021"
+            ]
+        ]
+    },
+    {
+        "id": "f62f82038218835d",
+        "type": "change",
+        "z": "6bb10caef6b8d518",
+        "name": "set topic and timestamp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "Ballon1Haut",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "date",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1270,
+        "y": 360,
+        "wires": [
+            [
+                "c1154f6f6145feb0"
+            ]
+        ]
+    },
+    {
+        "id": "13c3eb53292d07e9",
+        "type": "debug",
+        "z": "6bb10caef6b8d518",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1820,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "58e1b48f9b10d794",
+        "type": "function",
+        "z": "6bb10caef6b8d518",
+        "name": "timestamp series start",
+        "func": "msg.payload = new Date()\nmsg.topic = \"date\"\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1360,
+        "y": 800,
+        "wires": [
+            [
+                "20cec05f67e0aff1"
+            ]
+        ]
+    },
+    {
+        "id": "598f976954e9f3df",
+        "type": "complete",
+        "z": "6bb10caef6b8d518",
+        "name": "when delay completed",
+        "scope": [
+            "59c9b81ada346e21"
+        ],
+        "uncaught": false,
+        "x": 1140,
+        "y": 800,
+        "wires": [
+            [
+                "58e1b48f9b10d794"
+            ]
+        ]
+    },
+    {
+        "id": "01e16d31ad644518",
+        "type": "modbus-client",
+        "name": "fausse_batterie",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "127.0.0.1",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "1",
+        "commandDelay": "1",
+        "clientTimeout": "1000",
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": "2000",
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    }
+]

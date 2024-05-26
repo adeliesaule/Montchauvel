@@ -1,0 +1,781 @@
+[
+    {
+        "id": "6e2541328eabf8ca",
+        "type": "tab",
+        "label": "SMA Inverters - v2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "621583a1ba44f2d0",
+        "type": "file",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "filename": "C:\\Users\\HP\\Desktop\\SMA_Data_Export\\Battery_SOC\\SOC.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1130,
+        "y": 80,
+        "wires": [
+            [
+                "aff30ea160d0eece"
+            ]
+        ]
+    },
+    {
+        "id": "670121625dfbd83d",
+        "type": "debug",
+        "z": "6e2541328eabf8ca",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "5ce3c66d2b54c81d",
+        "type": "file",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "filename": "C:\\Users\\HP\\Desktop\\SMA_Data_Export\\Battery_SOC\\Yield_408.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1150,
+        "y": 240,
+        "wires": [
+            [
+                "670121625dfbd83d"
+            ]
+        ]
+    },
+    {
+        "id": "f2e7a4c54d4f2ba5",
+        "type": "modbus-getter",
+        "z": "6e2541328eabf8ca",
+        "name": "Battery SOC",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "3",
+        "dataType": "HoldingRegister",
+        "adr": "30845",
+        "quantity": "4",
+        "server": "01e16d31ad644518",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 290,
+        "y": 40,
+        "wires": [
+            [
+                "fe9f9bd026aeaea5"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "73bd1390feec0a97",
+        "type": "inject",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3600",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 90,
+        "y": 80,
+        "wires": [
+            [
+                "b61b89a780df1a64",
+                "f2e7a4c54d4f2ba5",
+                "f6b33663ba409e38"
+            ]
+        ]
+    },
+    {
+        "id": "b61b89a780df1a64",
+        "type": "delay",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 100,
+        "y": 240,
+        "wires": [
+            [
+                "517bf02e00d13135",
+                "e3ae3c0083a870ec",
+                "f3554f74759c331f"
+            ]
+        ]
+    },
+    {
+        "id": "e3ae3c0083a870ec",
+        "type": "modbus-getter",
+        "z": "6e2541328eabf8ca",
+        "name": "Sunny Boy 408",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "3",
+        "dataType": "HoldingRegister",
+        "adr": "30535",
+        "quantity": "2",
+        "server": "6bb78accb7810008",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 300,
+        "y": 200,
+        "wires": [
+            [
+                "c42e808a97e7b970"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "def88069224e09be",
+        "type": "modbus-getter",
+        "z": "6e2541328eabf8ca",
+        "name": "Sunny Boy 599",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "30535",
+        "quantity": "2",
+        "server": "afb6eda4540a8617",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "1ee8ed566adfaca6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "517bf02e00d13135",
+        "type": "delay",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 100,
+        "y": 400,
+        "wires": [
+            [
+                "1b3f51d67d474fb1",
+                "def88069224e09be",
+                "1e8bbee8d2478d4c"
+            ]
+        ]
+    },
+    {
+        "id": "06993e687fc0a6d5",
+        "type": "file",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "filename": "C:\\Users\\HP\\Desktop\\SMA_Data_Export\\Battery_SOC\\Yield_599.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1150,
+        "y": 400,
+        "wires": [
+            [
+                "f240ff3c463563d9"
+            ]
+        ]
+    },
+    {
+        "id": "f240ff3c463563d9",
+        "type": "debug",
+        "z": "6e2541328eabf8ca",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "ea19dfd5304dfb4a",
+        "type": "modbus-getter",
+        "z": "6e2541328eabf8ca",
+        "name": "Sunny Boy 677",
+        "showStatusActivities": false,
+        "showErrors": false,
+        "showWarnings": true,
+        "logIOActivities": false,
+        "unitid": "",
+        "dataType": "HoldingRegister",
+        "adr": "30535",
+        "quantity": "2",
+        "server": "f35b6f8c451f0ab1",
+        "useIOFile": false,
+        "ioFile": "",
+        "useIOForPayload": false,
+        "emptyMsgOnFail": false,
+        "keepMsgProperties": false,
+        "delayOnStart": false,
+        "startDelayTime": "",
+        "x": 300,
+        "y": 520,
+        "wires": [
+            [
+                "c130a16539083077"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bfeb58fc52e034cc",
+        "type": "file",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "filename": "C:\\Users\\HP\\Desktop\\SMA_Data_Export\\Battery_SOC\\Yield_677.csv",
+        "filenameType": "str",
+        "appendNewline": false,
+        "createDir": true,
+        "overwriteFile": "false",
+        "encoding": "none",
+        "x": 1150,
+        "y": 560,
+        "wires": [
+            [
+                "67cba2cf483354b1"
+            ]
+        ]
+    },
+    {
+        "id": "67cba2cf483354b1",
+        "type": "debug",
+        "z": "6e2541328eabf8ca",
+        "name": "debug 4",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c6661960a3e57945",
+        "type": "csv",
+        "z": "6e2541328eabf8ca",
+        "name": "csv",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\r\\n",
+        "temp": "time,,SunnyBoy408",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 810,
+        "y": 240,
+        "wires": [
+            [
+                "5ce3c66d2b54c81d"
+            ]
+        ]
+    },
+    {
+        "id": "f3554f74759c331f",
+        "type": "join",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 640,
+        "y": 240,
+        "wires": [
+            [
+                "c6661960a3e57945"
+            ]
+        ]
+    },
+    {
+        "id": "68bf52a08e7a4382",
+        "type": "csv",
+        "z": "6e2541328eabf8ca",
+        "name": "csv",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\r\\n",
+        "temp": "time,,SunnyBoy599",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 810,
+        "y": 400,
+        "wires": [
+            [
+                "06993e687fc0a6d5"
+            ]
+        ]
+    },
+    {
+        "id": "f31964986a1ff0a5",
+        "type": "csv",
+        "z": "6e2541328eabf8ca",
+        "name": "csv",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "once",
+        "multi": "mult",
+        "ret": "\\r\\n",
+        "temp": "time,,SunnyBoy677",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 810,
+        "y": 560,
+        "wires": [
+            [
+                "bfeb58fc52e034cc"
+            ]
+        ]
+    },
+    {
+        "id": "1b3f51d67d474fb1",
+        "type": "delay",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 100,
+        "y": 560,
+        "wires": [
+            [
+                "ea19dfd5304dfb4a",
+                "2ff4a276cd721289"
+            ]
+        ]
+    },
+    {
+        "id": "fe9f9bd026aeaea5",
+        "type": "split",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 470,
+        "y": 40,
+        "wires": [
+            [
+                "f6b33663ba409e38"
+            ]
+        ]
+    },
+    {
+        "id": "f6b33663ba409e38",
+        "type": "join",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "myrawdate",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "5",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 640,
+        "y": 80,
+        "wires": [
+            [
+                "dc174e86072fec35"
+            ]
+        ]
+    },
+    {
+        "id": "aff30ea160d0eece",
+        "type": "debug",
+        "z": "6e2541328eabf8ca",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1500,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "dc174e86072fec35",
+        "type": "csv",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "sep": ",",
+        "hdrin": "",
+        "hdrout": "once",
+        "multi": "one",
+        "ret": "\\r\\n",
+        "temp": "Time,,SOC,,",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": true,
+        "x": 810,
+        "y": 80,
+        "wires": [
+            [
+                "621583a1ba44f2d0"
+            ]
+        ]
+    },
+    {
+        "id": "c42e808a97e7b970",
+        "type": "split",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "f3554f74759c331f"
+            ]
+        ]
+    },
+    {
+        "id": "1ee8ed566adfaca6",
+        "type": "split",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 470,
+        "y": 360,
+        "wires": [
+            [
+                "1e8bbee8d2478d4c"
+            ]
+        ]
+    },
+    {
+        "id": "1e8bbee8d2478d4c",
+        "type": "join",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 660,
+        "y": 400,
+        "wires": [
+            [
+                "68bf52a08e7a4382"
+            ]
+        ]
+    },
+    {
+        "id": "c130a16539083077",
+        "type": "split",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 470,
+        "y": 520,
+        "wires": [
+            [
+                "2ff4a276cd721289"
+            ]
+        ]
+    },
+    {
+        "id": "2ff4a276cd721289",
+        "type": "join",
+        "z": "6e2541328eabf8ca",
+        "name": "",
+        "mode": "custom",
+        "build": "array",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 660,
+        "y": 560,
+        "wires": [
+            [
+                "f31964986a1ff0a5"
+            ]
+        ]
+    },
+    {
+        "id": "01e16d31ad644518",
+        "type": "modbus-client",
+        "name": "Sunny Island",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "169.254.43.70",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 3,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": false,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": true,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "6bb78accb7810008",
+        "type": "modbus-client",
+        "name": "Sunny Boy 408",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "169.254.177.213",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": "",
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "afb6eda4540a8617",
+        "type": "modbus-client",
+        "name": "Sunny Boy 599",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "169.254.189.127",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 3,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": false,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    },
+    {
+        "id": "f35b6f8c451f0ab1",
+        "type": "modbus-client",
+        "name": "Sunny Boy 677",
+        "clienttype": "tcp",
+        "bufferCommands": true,
+        "stateLogEnabled": false,
+        "queueLogEnabled": false,
+        "failureLogEnabled": true,
+        "tcpHost": "169.254.182.103",
+        "tcpPort": "502",
+        "tcpType": "DEFAULT",
+        "serialPort": "/dev/ttyUSB",
+        "serialType": "RTU-BUFFERD",
+        "serialBaudrate": "9600",
+        "serialDatabits": "8",
+        "serialStopbits": "1",
+        "serialParity": "none",
+        "serialConnectionDelay": "100",
+        "serialAsciiResponseStartDelimiter": "0x3A",
+        "unit_id": 3,
+        "commandDelay": 1,
+        "clientTimeout": 1000,
+        "reconnectOnTimeout": true,
+        "reconnectTimeout": 2000,
+        "parallelUnitIdsAllowed": true,
+        "showErrors": false,
+        "showWarnings": true,
+        "showLogs": true
+    }
+]
